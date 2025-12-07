@@ -1,0 +1,228 @@
+<img width="1920" height="1080" alt="Screenshot (234)" src="https://github.com/user-attachments/assets/b3d0a372-8add-48f2-9c94-77e1a17415ef" />
+
+
+# AWS EC2 Website Deployment - Project Report
+
+## Project Overview
+
+**Project Title:** Deploy a Multi-Page Business Website on AWS EC2 using Git, Linux & Nginx
+
+**Duration:** 4-5 Days
+
+**Difficulty Level:** Medium
+
+**Objective:** Successfully build and deploy a complete static website using the GitHub → EC2 → Nginx workflow, gaining practical experience in real DevOps processes, Linux server administration, and cloud infrastructure management.
+
+**Project Summary:** This project involved creating a multi-page business website (Coffee Blends - a responsive coffee shop and restaurant website) and deploying it on AWS EC2 using Nginx web server. The project demonstrates end-to-end DevOps workflow including version control with Git, EC2 instance management, Linux command line operations, and web server configuration.
+
+---
+
+## Step-by-Step Process
+
+### Day 1: Website Creation & GitHub Setup
+
+#### Task 1: Build Multi-Page Website
+- Created a responsive 5-page website with HTML and CSS (no templates)
+- **Pages Developed:**
+  - Home page with hero section and call-to-action
+  - About page with company story and team information
+  - Services page showcasing coffee blends and restaurant offerings
+  - Contact page with contact form and location details
+  - Gallery/Portfolio page for visual showcase
+  
+- **Technologies Used:** HTML5 + CSS3 + JavaScript
+- **Design Approach:** Responsive design for mobile and desktop compatibility
+
+#### Task 2: GitHub Repository Setup
+- Created repository: `business-website-project`
+- Added all HTML, CSS, and JavaScript files
+- Uploaded assets and images
+- Created comprehensive README with:
+  - Project description highlighting Coffee Blends concept
+  - Technology stack documentation
+  - Local screenshots and setup instructions
+  - Features overview including e-commerce capabilities
+
+---
+
+### Day 2: EC2 Setup & Linux Configuration
+
+#### Task 1: Launch EC2 Instance
+- **Instance Details:**
+  - AMI: Ubuntu 22.04 LTS
+  - Instance Type: t2.micro (eligible for free tier)
+  - Security Group Configuration:
+    - SSH (Port 22) - for remote access
+    - HTTP (Port 80) - for web traffic
+- **Elastic IP Assignment:** Attached static Elastic IP for consistent public access
+
+#### Task 2: SSH Connection Establishment
+- Generated and configured EC2 key pair (.pem file)
+- Set proper file permissions: `chmod 400 key.pem`
+- Successfully established SSH connection: `ssh -i key.pem ubuntu@<elastic-ip>`
+- Verified secure remote access to instance
+
+#### Task 3: Nginx Installation
+- Updated system packages: `sudo apt update`
+- Upgraded existing packages: `sudo apt upgrade -y`
+- Installed Nginx: `sudo apt install nginx -y`
+- Verified Nginx service status: `sudo systemctl status nginx`
+- Confirmed Nginx running and enabled on boot
+
+---
+
+### Day 3: Git Integration & Nginx Configuration
+
+#### Task 1: Git Installation
+- Installed Git on EC2: `sudo apt install git -y`
+- Configured Git if needed for future commits
+
+#### Task 2: Repository Cloning
+- Cloned website repository: `git clone https://github.com/[username]/business-website-project.git`
+- Downloaded all website files to EC2 instance
+- Verified complete file structure in clone directory
+
+#### Task 3: Deploy Files to Nginx Root
+- Cleared default Nginx content: `sudo rm -rf /var/www/html/*`
+- Moved website files to Nginx root: `sudo mv business-website-project/* /var/www/html/`
+- Verified all files in correct location: `/var/www/html/`
+
+#### Task 4: Nginx Service Restart
+- Restarted Nginx: `sudo systemctl restart nginx`
+- Confirmed service running with updated content
+
+---
+
+### Day 4: Debugging & Issue Resolution
+
+#### Common Issues Encountered and Solutions
+
+**Issue 1: CSS Files Not Loading**
+- **Problem:** Styling not appearing on live website
+- **Root Cause:** Incorrect file paths in HTML (relative vs absolute paths)
+- **Solution:** Updated CSS links to use correct relative paths and verified file permissions
+- **Command Used:** `sudo chmod -R 755 /var/www/html` to ensure read permissions
+
+**Issue 2: Broken Images**
+- **Problem:** Images showing 404 errors
+- **Root Cause:** Image file paths incorrect or files not deployed
+- **Solution:** Verified image folder structure and corrected HTML image source paths
+- **Testing:** Checked browser console for resource loading errors
+
+**Issue 3: Wrong File Paths**
+- **Problem:** Assets loading from incorrect directories
+- **Root Cause:** Different directory structure in GitHub vs deployed location
+- **Solution:** Updated all asset paths to match Nginx serving directory structure
+- **Verification:** Tested all links and resources individually
+
+**Issue 4: 404 Errors**
+- **Problem:** Pages returning 404 Not Found
+- **Root Cause:** File names not matching href links (case sensitivity)
+- **Solution:** Ensured consistent file naming and updated all navigation links
+- **Command:** `ls -la /var/www/html/` to verify file presence
+
+**Issue 5: Missing Assets**
+- **Problem:** JavaScript and CSS files partially deployed
+- **Root Cause:** Incomplete git clone or file transfer
+- **Solution:** Verified all files copied: `sudo ls -R /var/www/html/`
+- **Result:** Complete file structure confirmed
+
+**Issue 6: Permission Issues**
+- **Problem:** Nginx unable to read certain files
+- **Root Cause:** Incorrect file ownership and permissions
+- **Solution:** 
+  - Applied: `sudo chmod -R 755 /var/www/html`
+  - Applied: `sudo chown -R www-data:www-data /var/www/html`
+- **Testing:** Verified Nginx can read and serve all files
+
+---
+
+### Day 5: Testing & Final Verification
+
+#### Website Live Testing
+- **Access Point:** http://<elastic-ip>/
+- **Example:** http://13.204.36.146/
+- **Status:** ✅ Website fully functional and accessible
+
+#### Comprehensive Testing Checklist
+- ✅ All 5 pages loading correctly
+- ✅ Navigation between pages working
+- ✅ CSS styling applied properly
+- ✅ Images displaying correctly
+- ✅ Contact form functional
+- ✅ Responsive design working on mobile devices
+- ✅ No console errors
+- ✅ Page load times acceptable
+
+---
+
+## Errors Faced & Resolution Summary
+
+| Error | Cause | Solution | Status |
+|-------|-------|----------|--------|
+| CSS Not Loading | Wrong file paths | Updated relative paths | ✅ Resolved |
+| Broken Images | Missing image files | Verified and re-deployed assets | ✅ Resolved |
+| 404 Errors | File name mismatches | Standardized naming conventions | ✅ Resolved |
+| Permission Denied | Incorrect file permissions | Changed to 755 permissions | ✅ Resolved |
+| Incomplete Deployment | Partial git clone | Full file structure verified | ✅ Resolved |
+| Nginx Not Serving Files | Service not restarted | Restarted Nginx service | ✅ Resolved |
+
+---
+
+## Learning Outcomes
+
+Through this project, you have gained:
+
+1. **DevOps Workflow Understanding**
+   - GitHub to production deployment pipeline
+   - Version control integration with cloud infrastructure
+   - Continuous deployment best practices
+
+2. **AWS Cloud Skills**
+   - EC2 instance launch and configuration
+   - Security group management
+   - Elastic IP allocation and management
+   - AWS console navigation
+
+3. **Linux Administration**
+   - Package management (apt)
+   - File system navigation and manipulation
+   - Permission and ownership management
+   - Service management (systemctl)
+
+4. **Web Server Configuration**
+   - Nginx installation and configuration
+   - Serving static files
+   - Troubleshooting web server issues
+
+5. **Debugging & Troubleshooting**
+   - Systematic problem identification
+   - Log file analysis
+   - Browser developer tools usage
+   - File permission debugging
+
+---
+
+## Final Screenshots Reference
+
+The following screenshots have been captured for documentation:
+
+1. **EC2 Dashboard** - Instance details and configuration
+2. **Elastic IP** - Static IP assignment
+3. **Terminal SSH** - Successful remote connection
+4. **Git Clone** - Repository cloning process
+5. **Nginx Status** - Service running confirmation
+6. **Final Live Website** - All pages displaying correctly
+
+---
+
+## Conclusion
+
+This project successfully demonstrates a complete DevOps workflow from development to production deployment. The website is now live on AWS EC2, accessible via the assigned Elastic IP, and fully functional with all pages, assets, and features working correctly. This project provides excellent portfolio evidence of practical cloud deployment skills and is suitable for showcasing to potential employers in DevOps and cloud engineering roles.
+
+**Project Status:** ✅ **COMPLETE AND LIVE**
+
+---
+
+*Report Generated: December 2025*
+*Technology Stack: HTML5, CSS3, JavaScript, AWS EC2, Nginx, Git, Linux (Ubuntu 22.04)*
